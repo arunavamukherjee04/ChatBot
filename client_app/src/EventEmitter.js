@@ -1,15 +1,13 @@
-import io from 'socket.io-client';
-
-const ENDPOINT = 'http://localhost:8080';
-const socket = io(ENDPOINT);
+import Socket from './Util/Socket';
 
 function EventEmitter() {
-    console.log('emitting event');
-    function _emit(type) {
-        socket.emit(type);
+    const socket = Socket.getSocket();
+
+    function emit(type, payload = null) {
+        socket.emit(type, payload);
     }
 
-    return { _emit };
+    return { emit };
 }
 
 export default EventEmitter;

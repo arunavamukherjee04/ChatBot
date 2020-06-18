@@ -15,3 +15,16 @@
 .right-container {
     float: right;
 }
+
+.header {
+    height: 5.5vh;
+    padding: 0;
+    margin-top: 0;
+    font-size: 3rem;
+    text-align: left;
+    background-color: white;
+}
+
+.header span {
+    margin-left: 2rem;
+}

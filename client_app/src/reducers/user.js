@@ -13,7 +13,7 @@ export default function (state = initialState, action) {
         case USER_JOIN_REQ_ACCEPTED:
             return {
                 ...state,
-                this_user: payload.user,
+                this_user: payload,
                 is_joined: true,
             };
 

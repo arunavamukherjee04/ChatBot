@@ -7,6 +7,11 @@
     border-bottom: 1px solid #F2F2F2;
 }
 
+.right-panel {
+    margin: 0;
+    padding: 0;
+}
+
 .users-list {
     width: 100%;
     padding: 0.5rem;
@@ -14,4 +19,52 @@
 
 .users-list li:hover {
     background-color: #F2F2F2
+}
+
+.message-panel {
+    height: 87.2vh;
+    overflow: auto;
+}
+
+.message-type-box {
+    width: 100%;
+    padding: 0;
+}
+
+.message-type-box input {
+    padding: 1rem;
+}
+
+.message-type-box button {
+    background: #4A8AF4;
+      font: inherit;
+      font-size: 1.2rem;
+      border: 1px solid #4A8AF4;
+      border-radius: 3px;
+      padding: 0.6rem 2rem;
+      box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
+      color: white;
+      cursor: pointer;
+      margin-left: 0.5rem;
+}
+
+.chat_req_form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.chat_req_form button {
+    background: #4A8AF4;
+    font: inherit;
+    font-size: 1.2rem;
+    border: 1px solid #4A8AF4;
+    border-radius: 3px;
+    padding: 0.6rem 2rem;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
+    color: white;
+    cursor: pointer;
+    margin-left: 0.5rem;
+    
 }

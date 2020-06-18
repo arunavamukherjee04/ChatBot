@@ -1,0 +1,25 @@
+.message {
+    font-size: 1.2rem;
+
+    padding: 1rem;
+    border-radius: 15px 15px 15px 15px;
+-moz-border-radius: 15px 15px 15px 15px;
+-webkit-border-radius: 15px 15px 15px 15px;
+border: 0px solid #000000;
+}
+
+.this_user_message {
+    background-color: #4A8AF4;
+    color: #FFFFFF;
+    width: 60%;
+    float: right;
+    margin-right: 1rem;
+}
+
+.other_user_message {
+    background-color: #E6E6E6;
+    color: #21252B;
+    width: 60%;
+    float: left;
+    margin-right: 1rem;
+}

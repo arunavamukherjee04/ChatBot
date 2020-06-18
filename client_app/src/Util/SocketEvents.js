@@ -1,0 +1,7 @@
+export const CHAT_REQUEST = 'CHAT_REQUEST';
+export const ADD_NEW_USER = 'ADD_NEW_USER';
+export const NEW_USER_ADDED = 'NEW_USER_ADDED';
+export const ADD_REQ_ACCEPTED = 'ADD_REQ_ACCEPTED';
+export const CHAT_REQ_TO_CLIENT = 'CHAT_REQ_TO_CLIENT';
+export const SEND_MESSAGE_TO = 'SEND_MESSAGE_TO';
+export const MESSAGE_RECEIVED = 'MESSAGE_RECEIVED'

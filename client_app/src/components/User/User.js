@@ -1,16 +1,11 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 
-function User({name, is_online}) {
+function User({user, click}) {
     return (
-        <li>
-            {name}
+        <li onClick={() => click(user)}>
+            {user.name}
         </li>
     )
-}
-
-User.propTypes = {
-
 }
 
 export default User

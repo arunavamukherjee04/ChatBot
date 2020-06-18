@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 
 import './SplitApp.css';
 function Left(props) {
@@ -8,10 +7,6 @@ function Left(props) {
             {props.children}
         </div>
     )
-}
-
-Left.propTypes = {
-
 }
 
 export default Left

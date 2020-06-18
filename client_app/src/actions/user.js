@@ -1,31 +1,18 @@
-import axios from 'axios';
-import { USER_JOIN_REQ_ACCEPTED, NEW_USER_JOINED } from './types';
+//import axios from 'axios';
+import { ADD_NEW_USER } from '../Util/SocketEvents';
+import EventEmitter from '../EventEmitter';
+
+const emitter = new EventEmitter();
 
 /**
  * Join the user
  */
 
- 
-export const join_user = (name) => async dispatch => {
-    const config = {
-        headers: {
-            'Content-Type': 'application/json'
-        },
-    };
 
-    const body = JSON.stringify({
-        name
-    });
+export const join_user = (name) => async dispatch => {
 
     try {
-        const res = await axios.post('/user', body, config);
-
-        if (res.data.msg === 'USER_CREATED') {
-            dispatch({
-                type: USER_JOIN_REQ_ACCEPTED,
-                payload: res.data
-            });
-        }
+        emitter.emit(ADD_NEW_USER, { name });
     } catch (error) {
 
     }
