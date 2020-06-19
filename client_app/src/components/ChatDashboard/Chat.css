@@ -68,3 +68,42 @@
     margin-left: 0.5rem;
     
 }
+
+
+.chat_req_form .chat_status {
+    background: #4A8AF4;
+    font: inherit;
+    font-size: 1.2rem;
+    border: 1px solid #4A8AF4;
+    border-radius: 3px;
+    padding: 0.6rem 2rem;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
+    color: white;
+    margin-left: 0.5rem;
+}
+
+.chat_req_form .btn_type_success {
+    background: #16A05D;
+    font: inherit;
+    font-size: 1.2rem;
+    border: 1px solid #16A05D;
+    border-radius: 3px;
+    padding: 0.6rem 2rem;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
+    color: white;
+    margin-left: 0.5rem;
+
+    float: left;
+}
+
+.chat_req_form .btn_type_error {
+    background: #DD5145;
+    font: inherit;
+    font-size: 1.2rem;
+    border: 1px solid #DD5145;
+    border-radius: 3px;
+    padding: 0.6rem 2rem;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
+    color: white;
+    margin-left: 0.5rem;
+}

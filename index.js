@@ -12,7 +12,11 @@ const {
     NEW_USER_ADDED,
     CHAT_REQ_TO_CLIENT,
     SEND_MESSAGE_TO,
-    MESSAGE_RECEIVED
+    MESSAGE_RECEIVED,
+    CHAT_REQ_ACCEPTED,
+    CHAT_REQ_REJECTED,
+    CHAT_REQUEST_APPROVED,
+    CHAT_REQUEST_DENIED
 } = require('./SocketEvents');
 
 const User = require('./Users');
@@ -80,6 +84,12 @@ io.on('connection', (socket) => {
             message
         }
         SocketStore.getById(to_user.user_id).socket.emit(MESSAGE_RECEIVED, message_payload);
+    });
+
+    socket.on(CHAT_REQ_ACCEPTED, (data) => {
+        const { from_user, to_user } = data;
+
+        SocketStore.getById(to_user.user_id).socket.emit(CHAT_REQUEST_APPROVED, from_user);
     });
 
 

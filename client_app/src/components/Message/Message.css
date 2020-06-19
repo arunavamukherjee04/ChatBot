@@ -23,3 +23,11 @@ border: 0px solid #000000;
     float: left;
     margin-right: 1rem;
 }
+
+.notification_user_message {
+    background-color: #00AFF0;
+    color: #FFFFFF;
+    width: 60%;
+    float: left;
+    margin-right: 1rem;
+}

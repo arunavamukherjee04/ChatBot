@@ -5,14 +5,16 @@ import {
     NEW_USER_JOINED,
     USER_JOIN_REQ_ACCEPTED,
     NEW_CHAT_REQUEST,
-    MESSAGE_RECIEVED_ACTION
+    MESSAGE_RECIEVED_ACTION,
+    CHAT_REQUEST_APPROVAL_RECIEVED
 } from './actions/types';
 
 import {
     ADD_REQ_ACCEPTED,
     NEW_USER_ADDED,
     CHAT_REQ_TO_CLIENT,
-    MESSAGE_RECEIVED
+    MESSAGE_RECEIVED,
+    CHAT_REQUEST_APPROVED
 } from './Util/SocketEvents';
 
 
@@ -41,9 +43,15 @@ function EventManager() {
     });
 
     socket.on(CHAT_REQ_TO_CLIENT, (from_user) => {
+
+        ChatStatus.upsert({
+            chat_with: from_user,
+            status: REQUEST_RECEIVED
+        });
+
         store.dispatch({
             type: NEW_CHAT_REQUEST,
-            payload: from_user
+            payload: { from_user, status: REQUEST_RECEIVED }
         })
     });
 
@@ -64,6 +72,22 @@ function EventManager() {
         store.dispatch({
             type: MESSAGE_RECIEVED_ACTION,
             payload: message
+        });
+    })
+
+    socket.on(CHAT_REQUEST_APPROVED, (from_user) => {
+
+        ChatStatus.upsert({
+            chat_with: from_user,
+            status: APPROVED
+        });
+
+        store.dispatch({
+            type: CHAT_REQUEST_APPROVAL_RECIEVED,
+            payload: {
+                chat_with: from_user,
+                chat_status: APPROVED
+            }
         });
     })
 
