@@ -5,6 +5,7 @@ const express = require('express');
  */
 const router = require('./router');
 const Socket = require('./SocketIO');
+const path = require('path');
 const {
     CHAT_REQUEST,
     ADD_NEW_USER,
@@ -103,6 +104,23 @@ io.on('connection', (socket) => {
 
 
 });
+
+
+
+
+// Serve static asset in production
+
+if(process.env.NODE_ENV === 'production') {
+    //set static folder
+    application.use(express.static('client_app/build'));
+
+    application.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, 'client_app', 'build', 'index.html'));
+    });
+}
+
+const PORT = process.env.PORT || 8080;
+
 
 server.listen(PORT, () => console.log(`${new Date().toISOString()}: server started on port ${PORT}`));
 
