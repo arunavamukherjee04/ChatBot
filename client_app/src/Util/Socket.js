@@ -1,7 +1,7 @@
 import io from 'socket.io-client';
 function Socket() {
     let socket;
-    const ENDPOINT = 'http://localhost:8080';
+    const ENDPOINT = '';
 
     function getSocket() {
         if (!socket) {

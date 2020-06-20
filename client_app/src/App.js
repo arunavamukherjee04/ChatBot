@@ -27,7 +27,7 @@ const App = () => {
                 <Fragment>
                     <main className="main-content">
                         <Switch>
-                            <Route exact path='/join' component={Join} />
+                            <Route exact path='/' component={Join} />
                             <Route exact path='/chats' component={ChatDashboard} />
                         </Switch>
                     </main>

@@ -30,7 +30,8 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 chat_with: payload.from_user,
-                chat_status: payload.status
+                chat_status: payload.status,
+                messages: []
             }
 
         case SEND_CHAT_REQUEST:
