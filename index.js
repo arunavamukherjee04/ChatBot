@@ -33,7 +33,7 @@ const PORT = process.env.PORT || 8080;
 application.use(express.json({
     extended: false
 }));
-application.use(router);
+//application.use(router);
 
 Socket.createSocketIO(application);
 const { io, server } = Socket.getSocketIO();
