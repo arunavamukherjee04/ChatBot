@@ -21,15 +21,15 @@ const JoinForm = ({ join_user, is_joined, this_user }) => {
     }
 
     return (
-        <form className="auth-form">
+        <form className="auth-form" onSubmit={join}>
             <p className="jumbo-text">
                 Welcome to the ChatBot.
             </p>
             <div className="form-control">
-                <input type="text" id="name" placeholder="Enter your name here..." onChange={(oEvent => setName(oEvent.target.value))} />
+                <input type="text" id="name" placeholder="Enter your name here..." onChange={(oEvent => setName(oEvent.target.value))} className='join_form_name'/>
             </div>
             <div className="form-action">
-                <button type="button" onClick={join}>Join</button>
+                <button type="submit">Join</button>
             </div>
         </form>
     );

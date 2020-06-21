@@ -2,7 +2,6 @@
     left: 0;
     top: 0;
     width: 100%;
-    height: 3.5rem;
 }
 
 .left-container {
@@ -23,6 +22,7 @@
     font-size: 3rem;
     text-align: left;
     background-color: white;
+    margin-bottom: 1rem;
 }
 
 .header span {

@@ -23,6 +23,10 @@ export default function Message({ message, sender }) {
                         {message}
                     </p>
                 )
+            default: 
+                return(
+                    <span></span>
+                )
         }
     })(message, sender);
     return (

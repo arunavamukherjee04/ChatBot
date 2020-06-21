@@ -19,7 +19,6 @@ import { MdSend } from "react-icons/md";
 import { send_chat_request, send_message, load_old_messages, chatRequestResponse } from '../../actions/chat';
 
 import PrivateChat from '../../Util/PrivateChat';
-import ChatStatus from '../../Util/ChatStatus';
 import {
     REQUESTED,
     APPROVED,
@@ -42,14 +41,16 @@ const Chats = ({
 
 }) => {
     if (this_user === null) {
-        return <Redirect to='/join' />
+        return <Redirect to='/' />
     }
 
     const message_element = React.createRef();
 
     const OtherUsers = (this_user) && users.filter(user => user.user_id !== this_user.user_id);
 
-    const LoggedInUsers = (OtherUsers && OtherUsers.length === 0) ? <NoUserAvailable /> : (OtherUsers) && OtherUsers.map(user => {
+    const LoggedInUsers = (OtherUsers && OtherUsers.length === 0) ? (<div className='no_user_messge_container'>
+        <span>No User Available currently</span>
+    </div>) : (OtherUsers) && OtherUsers.map(user => {
         return <User key={user.user_id} user={user} click={(user) => clickOnUser(user)} />
     });
 
@@ -107,7 +108,7 @@ const Chats = ({
                     return <div className='chat_req_form form-control'>
                         <span className='chat_status'>
                             Awaiting Confirmation...
-                            </span>
+                        </span>
                     </div>
                 case APPROVED:
                     return <form className='message-type-box form-control' onSubmit={onPressSend}>
@@ -117,9 +118,11 @@ const Chats = ({
                 case REQUEST_RECEIVED:
                     return <div className='chat_req_form form-control'>
                         <span>
-                            <button className='btn_type_success' onClick={() => {sendResponse(true)}}>Accept</button>
+                            <button className='btn_type_success' onClick={() => { sendResponse(true) }}>Accept</button>
                         </span>
                     </div>
+                default:
+                    return <span></span>
             }
         } else {
             return <span></span>
@@ -147,7 +150,7 @@ const Chats = ({
                     </div>
 
                     <div className='message-panel'>
-                        {chat_with && chat_status === REQUEST_RECEIVED && (<Message message={chat_with.name.concat(' wants to chat with you...')} sender='system'/>)}
+                        {chat_with && chat_status === REQUEST_RECEIVED && (<Message message={chat_with.name.concat(' wants to chat with you...')} sender='system' />)}
                         {
                             MessageComponents
                         }

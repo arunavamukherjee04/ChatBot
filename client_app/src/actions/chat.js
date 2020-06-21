@@ -1,16 +1,15 @@
 import {
-    SEND_CHAT_REQUEST,
-    SEND_MESSAGE_ACTION,
-    LOAD_OLD_MESSAGES,
-    APPROVED_CHAT_REQUEST,
-    REJECTED_CHAT_REQUEST
+    REDUX_EVENT_SEND_CHAT_REQUEST,
+    REDUX_EVENT_SEND_MESSAGE,
+    REDUX_EVENT_LOAD_OLD_MESSAGES,
+    REDUX_EVENT_APPROVED_CHAT_REQUEST
 } from './types';
 
+
 import {
-    CHAT_REQUEST,
-    SEND_MESSAGE_TO,
-    CHAT_REQ_ACCEPTED,
-    CHAT_REQ_REJECTED
+    SOCKET_EVENT_NEW_CHAT_REQUEST,
+    SOCKET_EVENT_SEND_MESSAGE_TO,
+    SOCKET_EVENT_CHAT_REQUEST_APPROVED
 } from '../Util/SocketEvents';
 
 import EventEmitter from '../EventEmitter';
@@ -20,9 +19,7 @@ import ChatStatus from '../Util/ChatStatus';
 import {
     REQUESTED,
     APPROVED,
-    REJECTED,
-    NONE,
-    REQUEST_RECEIVED,
+    NONE
 } from '../Util/ChatStatusENUM';
 
 const emitter = new EventEmitter();
@@ -32,7 +29,7 @@ export const send_chat_request = (from_user, to_user) => dispatch => {
         from_user,
         to_user
     }
-    emitter.emit(CHAT_REQUEST, event_payload);
+    emitter.emit(SOCKET_EVENT_NEW_CHAT_REQUEST, event_payload);
 
     ChatStatus.upsert({
         chat_with: to_user,
@@ -40,7 +37,7 @@ export const send_chat_request = (from_user, to_user) => dispatch => {
     });
 
     dispatch({
-        type: SEND_CHAT_REQUEST,
+        type: REDUX_EVENT_SEND_CHAT_REQUEST,
         payload: { to_user, status: REQUESTED }
     });
 
@@ -60,10 +57,10 @@ export const send_message = (from_user, to_user, message) => dispatch => {
         message: message.msg
     };
 
-    emitter.emit(SEND_MESSAGE_TO, event_payload);
+    emitter.emit(SOCKET_EVENT_SEND_MESSAGE_TO, event_payload);
 
     dispatch({
-        type: SEND_MESSAGE_ACTION,
+        type: REDUX_EVENT_SEND_MESSAGE,
         payload: redux_payload
     });
 }
@@ -71,7 +68,6 @@ export const send_message = (from_user, to_user, message) => dispatch => {
 export const load_old_messages = (user) => dispatch => {
     const chats = PrivateChat.getByFriendId(user.user_id);
     let chat_status = ChatStatus.getByFriendId(user.user_id);
-    console.log(chat_status);
     if (!chat_status) {
         const chatStatusObj = {
             chat_with: user,
@@ -85,7 +81,7 @@ export const load_old_messages = (user) => dispatch => {
 
     const old_messages = chats.map(chat => chat.message);
     dispatch({
-        type: LOAD_OLD_MESSAGES,
+        type: REDUX_EVENT_LOAD_OLD_MESSAGES,
         payload: {
             chat_with: user,
             messages: old_messages,
@@ -100,13 +96,9 @@ export const chatRequestResponse = (isAccepted, from_user, to_user) => dispatch 
     let REDUX_EVENT_TYPE;
 
     if (isAccepted) {
-        SOCKET_EVENT = CHAT_REQ_ACCEPTED;
+        SOCKET_EVENT = SOCKET_EVENT_CHAT_REQUEST_APPROVED;
         CHAT_STATUS = APPROVED;
-        REDUX_EVENT_TYPE = APPROVED_CHAT_REQUEST;
-    } else {
-        SOCKET_EVENT = CHAT_REQ_REJECTED;
-        CHAT_STATUS = REJECTED;
-        REDUX_EVENT_TYPE = REJECTED_CHAT_REQUEST;
+        REDUX_EVENT_TYPE = REDUX_EVENT_APPROVED_CHAT_REQUEST;
     }
     emitter.emit(SOCKET_EVENT, {
         from_user,

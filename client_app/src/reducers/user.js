@@ -1,4 +1,4 @@
-import { USER_JOIN_REQ_ACCEPTED, NEW_USER_JOINED } from '../actions/types';
+import { REDUX_EVENT_USER_JOIN_REQ_ACCEPTED, REDUX_EVENT_USER_LIST_UPDATED } from '../actions/types';
 
 const initialState = {
     users: [],
@@ -10,14 +10,14 @@ export default function (state = initialState, action) {
     const { type, payload } = action;
 
     switch (type) {
-        case USER_JOIN_REQ_ACCEPTED:
+        case REDUX_EVENT_USER_JOIN_REQ_ACCEPTED:
             return {
                 ...state,
                 this_user: payload,
                 is_joined: true,
             };
 
-        case NEW_USER_JOINED:
+        case REDUX_EVENT_USER_LIST_UPDATED:
             return {
                 ...state,
                 users: payload,

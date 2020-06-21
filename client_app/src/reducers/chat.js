@@ -1,18 +1,15 @@
 import {
-    REQUESTED,
-    APPROVED,
-    NONE,
-    REQUEST_RECEIVED
+    NONE
 } from '../Util/ChatStatusENUM';
 
 import {
-    NEW_CHAT_REQUEST,
-    SEND_CHAT_REQUEST,
-    MESSAGE_RECIEVED_ACTION,
-    SEND_MESSAGE_ACTION,
-    LOAD_OLD_MESSAGES,
-    APPROVED_CHAT_REQUEST,
-    CHAT_REQUEST_APPROVAL_RECIEVED
+    REDUX_EVENT_NEW_CHAT_REQUEST,
+    REDUX_EVENT_SEND_CHAT_REQUEST,
+    REDUX_EVENT_MESSAGE_RECIEVED,
+    REDUX_EVENT_SEND_MESSAGE,
+    REDUX_EVENT_LOAD_OLD_MESSAGES,
+    REDUX_EVENT_APPROVED_CHAT_REQUEST,
+    REDUX_EVENT_CHAT_REQUEST_APPROVAL_RECIEVED
 } from '../actions/types';
 const initialState = {
     chat_with: null,
@@ -26,7 +23,7 @@ export default function (state = initialState, action) {
     const { type, payload } = action;
 
     switch (type) {
-        case NEW_CHAT_REQUEST:
+        case REDUX_EVENT_NEW_CHAT_REQUEST:
             return {
                 ...state,
                 chat_with: payload.from_user,
@@ -34,7 +31,7 @@ export default function (state = initialState, action) {
                 messages: []
             }
 
-        case SEND_CHAT_REQUEST:
+        case REDUX_EVENT_SEND_CHAT_REQUEST:
             return {
                 ...state,
                 chat_with: payload.to_user,
@@ -42,7 +39,7 @@ export default function (state = initialState, action) {
 
             }
 
-        case MESSAGE_RECIEVED_ACTION:
+        case REDUX_EVENT_MESSAGE_RECIEVED:
             return {
                 ...state,
                 is_requested: true,
@@ -50,7 +47,7 @@ export default function (state = initialState, action) {
                 messages: [...state.messages, payload]
             }
 
-        case SEND_MESSAGE_ACTION:
+        case REDUX_EVENT_SEND_MESSAGE:
             return {
                 ...state,
                 is_requested: true,
@@ -58,7 +55,7 @@ export default function (state = initialState, action) {
                 messages: [...state.messages, payload.message]
             }
 
-        case LOAD_OLD_MESSAGES:
+        case REDUX_EVENT_LOAD_OLD_MESSAGES:
             return {
                 ...state,
                 chat_with: payload.chat_with,
@@ -66,14 +63,14 @@ export default function (state = initialState, action) {
                 chat_status: payload.chat_status
             }
 
-        case APPROVED_CHAT_REQUEST:
+        case REDUX_EVENT_APPROVED_CHAT_REQUEST:
             return {
                 ...state,
                 chat_with: payload.chat_with,
                 chat_status: payload.chat_status
             }
 
-        case CHAT_REQUEST_APPROVAL_RECIEVED:
+        case REDUX_EVENT_CHAT_REQUEST_APPROVAL_RECIEVED:
             return {
                 ...state,
                 chat_with: payload.chat_with,

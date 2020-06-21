@@ -28,6 +28,12 @@ const ChatStatus = {
         if (to_be_updated_status) {
             to_be_updated_status.status = status;
         }
+    },
+    delete: (id) => {
+        const deletedChatStatus = chat_statuses.find(chat_status => chat_status.chat_with.user_id === id);
+        if(!deletedChatStatus) {
+            chat_statuses.splice(chat_statuses.indexOf(deletedChatStatus), 1);
+        }
     }
 }
 

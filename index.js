@@ -1,23 +1,19 @@
 const express = require('express');
 
-/**
- * Importing custom router
- */
-const router = require('./router');
 const Socket = require('./SocketIO');
 const path = require('path');
+
 const {
-    CHAT_REQUEST,
-    ADD_NEW_USER,
-    ADD_REQ_ACCEPTED,
-    NEW_USER_ADDED,
-    CHAT_REQ_TO_CLIENT,
-    SEND_MESSAGE_TO,
-    MESSAGE_RECEIVED,
-    CHAT_REQ_ACCEPTED,
-    CHAT_REQ_REJECTED,
-    CHAT_REQUEST_APPROVED,
-    CHAT_REQUEST_DENIED
+    SOCKET_EVENT_NEW_CHAT_REQUEST,
+    SOCKET_EVENT_CHAT_REQUEST_APPROVED,
+    SOCKET_EVENT_ADD_NEW_USER,
+    SOCKET_EVENT_NEW_USER_ADDED,
+    SOCKET_EVENT_I_AM_ADDED,
+    SOCKET_EVENT_I_HAVE_CHAT_REQUEST,
+    SOCKET_EVENT_MY_CHAT_REQUEST_APPROVED,
+    SOCKET_EVENT_SEND_MESSAGE_TO,
+    SOCKET_EVENT_MESSAGE_RECEIVED_FROM,
+    SOCKET_EVENT_EXISTING_USER_DISCONNECTED
 } = require('./SocketEvents');
 
 const User = require('./Users');
@@ -33,7 +29,6 @@ const PORT = process.env.PORT || 8080;
 application.use(express.json({
     extended: false
 }));
-//application.use(router);
 
 Socket.createSocketIO(application);
 const { io, server } = Socket.getSocketIO();
@@ -49,7 +44,7 @@ io.on('connection', (socket) => {
     * Adding a new user
     */
 
-    socket.on(ADD_NEW_USER, (data) => {
+    socket.on(SOCKET_EVENT_ADD_NEW_USER, (data) => {
         const new_user = {
             ...data,
             user_id: uuidv4(),
@@ -64,46 +59,45 @@ io.on('connection', (socket) => {
         User.add(new_user);
         SocketStore.add(new_socket);
 
-        io.emit(NEW_USER_ADDED, { users: User.getAll(), new_user });
+        io.emit(SOCKET_EVENT_NEW_USER_ADDED, { users: User.getAll(), new_user });
 
-        socket.emit(ADD_REQ_ACCEPTED, new_user);
+        socket.emit(SOCKET_EVENT_I_AM_ADDED, new_user);
     })
 
 
-    socket.on(CHAT_REQUEST, (data) => {
+    socket.on(SOCKET_EVENT_NEW_CHAT_REQUEST, (data) => {
 
         const { from_user, to_user } = data;
 
-        SocketStore.getById(to_user.user_id).socket.emit(CHAT_REQ_TO_CLIENT, from_user);
+        SocketStore.getById(to_user.user_id).socket.emit(SOCKET_EVENT_I_HAVE_CHAT_REQUEST, from_user);
     });
 
-    socket.on(SEND_MESSAGE_TO, (data) => {
+    socket.on(SOCKET_EVENT_SEND_MESSAGE_TO, (data) => {
         const { from_user, to_user, message } = data;
 
         const message_payload = {
             from_user,
             message
         }
-        SocketStore.getById(to_user.user_id).socket.emit(MESSAGE_RECEIVED, message_payload);
+        SocketStore.getById(to_user.user_id).socket.emit(SOCKET_EVENT_MESSAGE_RECEIVED_FROM, message_payload);
     });
 
-    socket.on(CHAT_REQ_ACCEPTED, (data) => {
+    socket.on(SOCKET_EVENT_CHAT_REQUEST_APPROVED, (data) => {
         const { from_user, to_user } = data;
 
-        SocketStore.getById(to_user.user_id).socket.emit(CHAT_REQUEST_APPROVED, from_user);
+        SocketStore.getById(to_user.user_id).socket.emit(SOCKET_EVENT_MY_CHAT_REQUEST_APPROVED, from_user);
     });
 
 
 
     socket.on('disconnect', () => {
-        io.emit('message', 'A user has let the chat');
-        console.log("a user has left the chat");
+        const disconnectedUserId = SocketStore.delete(socket.id)
+        User.delete(disconnectedUserId)
+
+        io.emit(SOCKET_EVENT_EXISTING_USER_DISCONNECTED, {deleted_user_id: disconnectedUserId, users: User.getAll()});
     });
 
 });
-
-
-
 
 // Serve static asset in production
 
