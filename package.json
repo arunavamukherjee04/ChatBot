@@ -7,7 +7,8 @@
     "start": "node index",
     "server": "nodemon index",
     "client": "npm start --prefix client_app",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client_app && npm run build --prefix client_app"
   },
   "author": "Arunava Mukherjee",
   "license": "ISC",

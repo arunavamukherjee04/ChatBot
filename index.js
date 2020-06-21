@@ -100,9 +100,6 @@ io.on('connection', (socket) => {
         console.log("a user has left the chat");
     });
 
-
-
-
 });
 
 
