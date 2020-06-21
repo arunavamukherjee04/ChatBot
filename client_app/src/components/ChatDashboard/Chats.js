@@ -4,7 +4,6 @@ import { v4 as uuidv4 } from 'uuid';
 
 import Left from '../SplitApp/Left';
 import Right from '../SplitApp/Right';
-import NoUserAvailable from '../NoUserAvailable/NoUserAvailable';
 import Message from '../Message/Message';
 import User from '../User/User'
 
